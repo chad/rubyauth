@@ -1,0 +1,42 @@
+10
+
+dir
+0
+http://svn.emr.railsnow.net/trunk/emr/lib/railties_ext
+http://svn.emr.railsnow.net
+add
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3bf59073-0cb9-4d89-84c0-2af3f94cd804
+
+fix_r19_plugin_command.rb
+file
+
+
+
+add
+
+fix_r19_generator_options.rb
+file
+
+
+
+add
+

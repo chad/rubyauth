@@ -1,0 +1,550 @@
+  [4;36;1mSQL (0.7ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (6.2ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (12.2ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to Initial (20091111145419)
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCREATE TABLE "delayed_jobs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "priority" integer DEFAULT 0, "attempts" integer DEFAULT 0, "handler" text, "last_error" text, "run_at" datetime, "locked_at" datetime, "failed_at" datetime, "locked_by" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "dependencies" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "requirements" varchar(255), "created_at" datetime, "updated_at" datetime, "rubygem_id" integer, "version_id" integer, "scope" varchar(255)) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCREATE INDEX "index_dependencies_on_rubygem_id" ON "dependencies" ("rubygem_id")[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mCREATE INDEX "index_dependencies_on_version_id" ON "dependencies" ("version_id")[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE TABLE "downloads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "version_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mCREATE INDEX "index_downloads_on_version_id" ON "downloads" ("version_id")[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (4.5ms)[0m   [0;1mCREATE TABLE "linksets" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rubygem_id" integer, "home" varchar(255), "wiki" varchar(255), "docs" varchar(255), "mail" varchar(255), "code" varchar(255), "bugs" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE INDEX "index_linksets_on_rubygem_id" ON "linksets" ("rubygem_id")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "ownerships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rubygem_id" integer, "user_id" integer, "token" varchar(255), "approved" boolean DEFAULT 'f', "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mCREATE INDEX "index_ownerships_on_rubygem_id" ON "ownerships" ("rubygem_id")[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE INDEX "index_ownerships_on_user_id" ON "ownerships" ("user_id")[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "rubygems" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "downloads" integer DEFAULT 0, "slug" varchar(255), "versions_count" integer DEFAULT 0) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mCREATE INDEX "index_rubygems_on_name" ON "rubygems" ("name")[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCREATE TABLE "subscriptions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rubygem_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE INDEX "index_subscriptions_on_rubygem_id" ON "subscriptions" ("rubygem_id")[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCREATE INDEX "index_subscriptions_on_user_id" ON "subscriptions" ("user_id")[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "encrypted_password" varchar(128), "salt" varchar(128), "token" varchar(128), "token_expires_at" datetime, "email_confirmed" boolean DEFAULT 'f' NOT NULL, "api_key" varchar(255), "confirmation_token" varchar(128), "remember_token" varchar(128), "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCREATE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCREATE INDEX "index_users_on_id_and_confirmation_token" ON "users" ("id", "confirmation_token")[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE INDEX "index_users_on_id_and_token" ON "users" ("id", "token")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCREATE INDEX "index_users_on_remember_token" ON "users" ("remember_token")[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE INDEX "index_users_on_token" ON "users" ("token")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "versions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "authors" varchar(255), "description" text, "number" varchar(255), "rubygem_id" integer, "built_at" datetime, "updated_at" datetime, "rubyforge_project" varchar(255), "summary" text, "platform" varchar(255), "created_at" datetime, "indexed" boolean DEFAULT 't', "prerelease" boolean, "position" integer, "downloads_count" integer DEFAULT 0, "latest" boolean, "full_name" varchar(255)) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCREATE INDEX "index_versions_on_built_at" ON "versions" ("built_at")[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE INDEX "index_versions_on_created_at" ON "versions" ("created_at")[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCREATE INDEX "index_versions_on_full_name" ON "versions" ("full_name")[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCREATE INDEX "index_versions_on_indexed" ON "versions" ("indexed")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCREATE INDEX "index_versions_on_number" ON "versions" ("number")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCREATE INDEX "index_versions_on_position" ON "versions" ("position")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCREATE INDEX "index_versions_on_prerelease" ON "versions" ("prerelease")[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE INDEX "index_versions_on_rubygem_id" ON "versions" ("rubygem_id")[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20091111145419')[0m
+  [4;35;1mSQL (0.6ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (2.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("delayed_jobs")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("dependencies")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_dependencies_on_version_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_dependencies_on_rubygem_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("downloads")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_downloads_on_version_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("linksets")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_linksets_on_rubygem_id')[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mPRAGMA index_list("ownerships")[0m
+  [4;35;1mSQL (2.9ms)[0m   [0mPRAGMA index_info('index_ownerships_on_user_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_ownerships_on_rubygem_id')[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mPRAGMA index_list("rubygems")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_rubygems_on_name')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("subscriptions")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_subscriptions_on_user_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_subscriptions_on_rubygem_id')[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mPRAGMA index_list("users")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_token')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_remember_token')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_id_and_token')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_id_and_confirmation_token')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_email')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mPRAGMA index_list("versions")[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_info('index_versions_on_rubygem_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_prerelease')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_position')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_number')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_indexed')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_full_name')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_created_at')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_built_at')[0m
+  [4;36;1mSQL (4.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mPRAGMA index_list("users")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_token')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_remember_token')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_id_and_token')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_id_and_confirmation_token')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_email')[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to Initial (20091111145419)
+Migrating to ClearanceUpdateUsers (20091111153258)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (58.9ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20091111153258')[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("delayed_jobs")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("dependencies")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_dependencies_on_version_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_dependencies_on_rubygem_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("downloads")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_downloads_on_version_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("linksets")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_linksets_on_rubygem_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("ownerships")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_ownerships_on_user_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_ownerships_on_rubygem_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("rubygems")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_rubygems_on_name')[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mPRAGMA index_list("subscriptions")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_subscriptions_on_user_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_subscriptions_on_rubygem_id')[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_list("users")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_token')[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mPRAGMA index_info('index_users_on_remember_token')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_id_and_token')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_id_and_confirmation_token')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_email')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mPRAGMA index_list("versions")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_rubygem_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_prerelease')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_position')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_number')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_indexed')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_full_name')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_created_at')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_built_at')[0m
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-11-11 09:34:43) [GET]
+Rendering home/index
+Completed in 36ms (View: 33, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-11-11 09:34:44) [GET]
+Rendering home/index
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing Clearance::SessionsController#new (for 127.0.0.1 at 2009-11-11 09:35:22) [GET]
+  Parameters: {"controller"=>"clearance/sessions", "action"=>"new"}
+Rendering sessions/new
+
+ActionView::TemplateError (undefined method `semantic_form_for' for #<ActionView::Base:0x00000102283c88>) on line #3 of app/views/sessions/new.html.erb:
+1: <h2>Sign in</h2>
+2: 
+3: <% semantic_form_for :session, :url => session_path do |form| %>
+4:   <% form.inputs do %>
+5:     <%= form.input :email %>
+6:     <%= form.input :password, :as => :password %>
+
+    app/views/sessions/new.html.erb:3
+    clearance (0.8.3) [v] app/controllers/clearance/sessions_controller.rb:8:in `new'
+    <internal:prelude>:8:in `synchronize'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendered rescues/_trace (77.0ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing Clearance::SessionsController#new (for 127.0.0.1 at 2009-11-11 09:36:54) [GET]
+  Parameters: {"controller"=>"clearance/sessions", "action"=>"new"}
+Rendering sessions/new
+
+ActionView::TemplateError (undefined method `semantic_form_for' for #<ActionView::Base:0x00000100ecba98>) on line #3 of app/views/sessions/new.html.erb:
+1: <h2>Sign in</h2>
+2: 
+3: <% semantic_form_for :session, :url => session_path do |form| %>
+4:   <% form.inputs do %>
+5:     <%= form.input :email %>
+6:     <%= form.input :password, :as => :password %>
+
+    app/views/sessions/new.html.erb:3
+    clearance (0.8.3) [v] app/controllers/clearance/sessions_controller.rb:8:in `new'
+    <internal:prelude>:8:in `synchronize'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendered rescues/_trace (78.6ms)
+Rendered rescues/_request_and_response (1.4ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing Clearance::SessionsController#new (for 127.0.0.1 at 2009-11-11 09:37:19) [GET]
+  Parameters: {"controller"=>"clearance/sessions", "action"=>"new"}
+Rendering sessions/new
+
+ActionView::TemplateError (undefined method `^' for "5":String) on line #3 of app/views/sessions/new.html.erb:
+1: <h2>Sign in</h2>
+2: 
+3: <% semantic_form_for :session, :url => session_path do |form| %>
+4:   <% form.inputs do %>
+5:     <%= form.input :email %>
+6:     <%= form.input :password, :as => :password %>
+
+    (eval):2:in `form_authenticity_token'
+    formtastic (0.9.1) lib/formtastic.rb:1397:in `block in semantic_form_for'
+    formtastic (0.9.1) lib/formtastic.rb:1356:in `use_custom_field_error_proc'
+    formtastic (0.9.1) lib/formtastic.rb:1396:in `semantic_form_for'
+    app/views/sessions/new.html.erb:3
+    clearance (0.8.3) [v] app/controllers/clearance/sessions_controller.rb:8:in `new'
+    <internal:prelude>:8:in `synchronize'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+    /usr/local/ruby19/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendered rescues/_trace (146.3ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing Clearance::SessionsController#new (for 127.0.0.1 at 2009-11-11 09:38:02) [GET]
+  Parameters: {"controller"=>"clearance/sessions", "action"=>"new"}
+Rendering sessions/new
+Completed in 136ms (View: 135, DB: 0) | 200 OK [http://localhost/session/new]
+
+
+Processing Clearance::SessionsController#new (for 127.0.0.1 at 2009-11-11 09:38:03) [GET]
+  Parameters: {"controller"=>"clearance/sessions", "action"=>"new"}
+Rendering sessions/new
+Completed in 6ms (View: 4, DB: 0) | 200 OK [http://localhost/session/new]
+
+
+Processing Clearance::SessionsController#create (for 127.0.0.1 at 2009-11-11 09:38:09) [POST]
+  Parameters: {"authenticity_token"=>"6jow0ZadUf60YW/nJp3PRl8Hmw3lYem6fvrsbY0Irvw=", "session"=>{"email"=>"chad@infoether.com", "password"=>"[FILTERED]"}, "commit"=>"Sign in", "controller"=>"clearance/sessions", "action"=>"create"}
+  [4;36;1mUser Load (21.3ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'chad@infoether.com') LIMIT 1[0m
+Rendering sessions/new (unauthorized)
+Completed in 115ms (View: 2, DB: 21) | 401 Unauthorized [http://localhost/session]
+
+
+Processing Clearance::UsersController#new (for 127.0.0.1 at 2009-11-11 09:38:11) [GET]
+  Parameters: {"controller"=>"clearance/users", "action"=>"new"}
+Rendering users/new
+Rendered users/_inputs (58.8ms)
+Completed in 106ms (View: 99, DB: 0) | 200 OK [http://localhost/users/new]
+
+
+Processing Clearance::UsersController#create (for 127.0.0.1 at 2009-11-11 09:38:18) [POST]
+  Parameters: {"authenticity_token"=>"6jow0ZadUf60YW/nJp3PRl8Hmw3lYem6fvrsbY0Irvw=", "user"=>{"email"=>"chad@chadfowler.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up", "controller"=>"clearance/users", "action"=>"create"}
+  [4;35;1mUser Load (0.5ms)[0m   [0mSELECT "users".id FROM "users" WHERE (LOWER("users"."email") = 'chad@chadfowler.com') LIMIT 1[0m
+  [4;36;1mUser Create (26.6ms)[0m   [0;1mINSERT INTO "users" ("email", "encrypted_password", "salt", "token", "token_expires_at", "email_confirmed", "api_key", "confirmation_token", "remember_token", "created_at", "updated_at") VALUES('chad@chadfowler.com', 'e220993374c5ec4487ba84ba24181fdc463e83f9', '3f8e47eaa6c6ed537ac3810127d68526e9998dd5', NULL, NULL, 'f', NULL, '6b8932b1e4f047ea8a4628b56c818554f427aa99', NULL, '2009-11-11 15:38:18', '2009-11-11 15:38:18')[0m
+Sent mail to chad@chadfowler.com
+
+Date: Wed, 11 Nov 2009 09:38:18 -0600
+From: donotreply@example.com
+To: chad@chadfowler.com
+Subject: Account confirmation
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+
+http://localhost/users/1/confirmation/new?token=6b8932b1e4f047ea8a4628b56c818554f427aa99
+Redirected to http://localhost:3000/session/new
+Completed in 251ms (DB: 27) | 302 Found [http://localhost/users]
+
+
+Processing Clearance::SessionsController#new (for 127.0.0.1 at 2009-11-11 09:38:18) [GET]
+  Parameters: {"controller"=>"clearance/sessions", "action"=>"new"}
+Rendering sessions/new
+Completed in 6ms (View: 5, DB: 0) | 200 OK [http://localhost/session/new]
+
+
+Processing Clearance::ConfirmationsController#new (for 127.0.0.1 at 2009-11-11 09:38:36) [GET]
+  Parameters: {"token"=>"[FILTERED]", "controller"=>"clearance/confirmations", "action"=>"new", "user_id"=>"1"}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = '1') LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."id" = '1') LIMIT 1[0m
+  [4;35;1mUser Load (1.7ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = '1' AND "users"."confirmation_token" = '6b8932b1e4f047ea8a4628b56c818554f427aa99') LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."id" = '1' AND "users"."confirmation_token" = '6b8932b1e4f047ea8a4628b56c818554f427aa99') LIMIT 1[0m
+  [4;35;1mUser Update (0.5ms)[0m   [0mUPDATE "users" SET "email_confirmed" = 't', "confirmation_token" = NULL, "updated_at" = '2009-11-11 15:38:36' WHERE "id" = 1[0m
+  [4;36;1mUser Update (0.3ms)[0m   [0;1mUPDATE "users" SET "remember_token" = '3bc2e22b32e4268b23478cc45ac489d74cc1add1', "updated_at" = '2009-11-11 15:38:36' WHERE "id" = 1[0m
+Redirected to http://localhost:3000/
+Completed in 273ms (DB: 3) | 302 Found [http://localhost/users/1/confirmation/new?token=6b8932b1e4f047ea8a4628b56c818554f427aa99]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-11-11 09:38:37) [GET]
+Rendering home/index
+Completed in 15ms (View: 13, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing Clearance::SessionsController#new (for 127.0.0.1 at 2009-11-11 09:38:45) [GET]
+  Parameters: {"controller"=>"clearance/sessions", "action"=>"new"}
+Rendering sessions/new
+Completed in 60ms (View: 58, DB: 0) | 200 OK [http://localhost/session/new]
+
+
+Processing Clearance::SessionsController#create (for 127.0.0.1 at 2009-11-11 09:38:52) [POST]
+  Parameters: {"authenticity_token"=>"6jow0ZadUf60YW/nJp3PRl8Hmw3lYem6fvrsbY0Irvw=", "session"=>{"email"=>"chad@chadfowler.com", "password"=>"[FILTERED]"}, "commit"=>"Sign in", "controller"=>"clearance/sessions", "action"=>"create"}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."email" = 'chad@chadfowler.com') LIMIT 1[0m
+  [4;36;1mUser Update (0.5ms)[0m   [0;1mUPDATE "users" SET "remember_token" = 'eca5329989394a88cced005f1f1d30413c9e4df2', "updated_at" = '2009-11-11 15:38:52' WHERE "id" = 1[0m
+Redirected to http://localhost:3000/
+Completed in 19ms (DB: 1) | 302 Found [http://localhost/session]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-11-11 09:38:52) [GET]
+Rendering home/index
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/]
+  [4;36;1mSQL (1.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to Initial (20091111145419)
+Migrating to ClearanceUpdateUsers (20091111153258)
+Migrating to CreateOauthTables (20091111154329)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mCREATE TABLE "client_applications" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "url" varchar(255), "support_url" varchar(255), "callback_url" varchar(255), "key" varchar(20), "secret" varchar(40), "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (34.3ms)[0m   [0;1mCREATE unique INDEX "index_client_applications_on_key" ON "client_applications" ("key")[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCREATE TABLE "oauth_tokens" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "type" varchar(20), "client_application_id" integer, "token" varchar(20), "secret" varchar(40), "callback_url" varchar(255), "verifier" varchar(20), "authorized_at" datetime, "invalidated_at" datetime, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCREATE unique INDEX "index_oauth_tokens_on_token" ON "oauth_tokens" ("token")[0m
+  [4;35;1mSQL (3.8ms)[0m   [0mCREATE TABLE "oauth_nonces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nonce" varchar(255), "timestamp" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mCREATE unique INDEX "index_oauth_nonces_on_nonce_and_timestamp" ON "oauth_nonces" ("nonce", "timestamp")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20091111154329')[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_list("client_applications")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_client_applications_on_key')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("delayed_jobs")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("dependencies")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_dependencies_on_version_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_dependencies_on_rubygem_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("downloads")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_downloads_on_version_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("linksets")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_linksets_on_rubygem_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("oauth_nonces")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_oauth_nonces_on_nonce_and_timestamp')[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_list("oauth_tokens")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_oauth_tokens_on_token')[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_list("ownerships")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_ownerships_on_user_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_ownerships_on_rubygem_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("rubygems")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_rubygems_on_name')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("subscriptions")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_subscriptions_on_user_id')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_subscriptions_on_rubygem_id')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mPRAGMA index_list("users")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_token')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_remember_token')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_id_and_token')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_users_on_id_and_confirmation_token')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_users_on_email')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mPRAGMA index_list("versions")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_rubygem_id')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_prerelease')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_position')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_number')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_indexed')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_info('index_versions_on_full_name')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_info('index_versions_on_created_at')[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_info('index_versions_on_built_at')[0m
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-11-11 09:58:39) [GET]
+Rendering home/index
+Completed in 27ms (View: 25, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing OauthClientsController#index (for 127.0.0.1 at 2009-11-11 09:58:53) [GET]
+
+NoMethodError (undefined method `login_required' for #<OauthClientsController:0x000001008e7618>):
+  <internal:prelude>:8:in `synchronize'
+  /usr/local/ruby19/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /usr/local/ruby19/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /usr/local/ruby19/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendered rescues/_trace (89.9ms)
+Rendered rescues/_request_and_response (2.8ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing OauthClientsController#index (for 127.0.0.1 at 2009-11-11 10:03:35) [GET]
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."remember_token" = 'eca5329989394a88cced005f1f1d30413c9e4df2') LIMIT 1[0m
+  [4;35;1mOauthToken Load (1.8ms)[0m   [0mSELECT * FROM "oauth_tokens" WHERE ("oauth_tokens".user_id = 1 AND (oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null)) ORDER BY authorized_at desc[0m
+Rendering oauth_clients/index
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM "client_applications" WHERE ("client_applications".user_id = 1) [0m
+Completed in 339ms (View: 21, DB: 3) | 200 OK [http://localhost/oauth_clients]
+  [4;36;1mSQL (1.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mCREATE TABLE "client_applications" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "url" varchar(255), "support_url" varchar(255), "callback_url" varchar(255), "key" varchar(20), "secret" varchar(40), "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (1.5ms)[0m   [0mCREATE UNIQUE INDEX "index_client_applications_on_key" ON "client_applications" ("key")[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mCREATE TABLE "delayed_jobs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "priority" integer DEFAULT 0, "attempts" integer DEFAULT 0, "handler" text, "last_error" text, "run_at" datetime, "locked_at" datetime, "failed_at" datetime, "locked_by" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mCREATE TABLE "dependencies" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "requirements" varchar(255), "created_at" datetime, "updated_at" datetime, "rubygem_id" integer, "version_id" integer, "scope" varchar(255)) [0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mCREATE INDEX "index_dependencies_on_rubygem_id" ON "dependencies" ("rubygem_id")[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mCREATE INDEX "index_dependencies_on_version_id" ON "dependencies" ("version_id")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mCREATE TABLE "downloads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "version_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mCREATE INDEX "index_downloads_on_version_id" ON "downloads" ("version_id")[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mCREATE TABLE "linksets" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rubygem_id" integer, "home" varchar(255), "wiki" varchar(255), "docs" varchar(255), "mail" varchar(255), "code" varchar(255), "bugs" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (1.6ms)[0m   [0mCREATE INDEX "index_linksets_on_rubygem_id" ON "linksets" ("rubygem_id")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mCREATE TABLE "oauth_nonces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nonce" varchar(255), "timestamp" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mCREATE UNIQUE INDEX "index_oauth_nonces_on_nonce_and_timestamp" ON "oauth_nonces" ("nonce", "timestamp")[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mCREATE TABLE "oauth_tokens" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "type" varchar(20), "client_application_id" integer, "token" varchar(20), "secret" varchar(40), "callback_url" varchar(255), "verifier" varchar(20), "authorized_at" datetime, "invalidated_at" datetime, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (2.3ms)[0m   [0mCREATE UNIQUE INDEX "index_oauth_tokens_on_token" ON "oauth_tokens" ("token")[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (2.8ms)[0m   [0mCREATE TABLE "ownerships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rubygem_id" integer, "user_id" integer, "token" varchar(255), "approved" boolean DEFAULT 'f', "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mCREATE INDEX "index_ownerships_on_rubygem_id" ON "ownerships" ("rubygem_id")[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mCREATE INDEX "index_ownerships_on_user_id" ON "ownerships" ("user_id")[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mCREATE TABLE "rubygems" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "downloads" integer DEFAULT 0, "slug" varchar(255), "versions_count" integer DEFAULT 0) [0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mCREATE INDEX "index_rubygems_on_name" ON "rubygems" ("name")[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.4ms)[0m   [0;1mCREATE TABLE "subscriptions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rubygem_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (1.7ms)[0m   [0mCREATE INDEX "index_subscriptions_on_rubygem_id" ON "subscriptions" ("rubygem_id")[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mCREATE INDEX "index_subscriptions_on_user_id" ON "subscriptions" ("user_id")[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.4ms)[0m   [0;1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "encrypted_password" varchar(128), "salt" varchar(128), "token" varchar(128), "token_expires_at" datetime, "email_confirmed" boolean DEFAULT 'f' NOT NULL, "api_key" varchar(255), "confirmation_token" varchar(128), "remember_token" varchar(128), "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (2.1ms)[0m   [0mCREATE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [4;36;1mSQL (2.6ms)[0m   [0;1mCREATE INDEX "index_users_on_id_and_confirmation_token" ON "users" ("id", "confirmation_token")[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mCREATE INDEX "index_users_on_id_and_token" ON "users" ("id", "token")[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mCREATE INDEX "index_users_on_remember_token" ON "users" ("remember_token")[0m
+  [4;35;1mSQL (2.3ms)[0m   [0mCREATE INDEX "index_users_on_token" ON "users" ("token")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (2.8ms)[0m   [0mCREATE TABLE "versions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "authors" varchar(255), "description" text, "number" varchar(255), "rubygem_id" integer, "built_at" datetime, "updated_at" datetime, "rubyforge_project" varchar(255), "summary" text, "platform" varchar(255), "created_at" datetime, "indexed" boolean DEFAULT 't', "prerelease" boolean, "position" integer, "downloads_count" integer DEFAULT 0, "latest" boolean, "full_name" varchar(255)) [0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mCREATE INDEX "index_versions_on_built_at" ON "versions" ("built_at")[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mCREATE INDEX "index_versions_on_created_at" ON "versions" ("created_at")[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mCREATE INDEX "index_versions_on_full_name" ON "versions" ("full_name")[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mCREATE INDEX "index_versions_on_indexed" ON "versions" ("indexed")[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mCREATE INDEX "index_versions_on_number" ON "versions" ("number")[0m
+  [4;35;1mSQL (2.5ms)[0m   [0mCREATE INDEX "index_versions_on_position" ON "versions" ("position")[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mCREATE INDEX "index_versions_on_prerelease" ON "versions" ("prerelease")[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mCREATE INDEX "index_versions_on_rubygem_id" ON "versions" ("rubygem_id")[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM "schema_migrations"[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20091111154329')[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20091111145419')[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20091111153258')[0m
